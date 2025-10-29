@@ -1,0 +1,43 @@
+package aplication;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class func {
+    public static void main(String[] args) {
+        String path= "C:\\Users\\geova\\OneDrive\\Documentos\\texto.csv";
+     
+        try (BufferedReader br=new BufferedReader(new FileReader(path))){
+           
+                String linha; 
+
+                 Pattern pattern = Pattern.compile("Marca:\\s*(.*?),\\s*Valor:\\s*([0-9]+\\.?[0-9]*),.*?Quantidade:\\s*([0-9]+)");
+                              
+                    while ((linha = br.readLine()) != null) {
+                        Matcher matcher = pattern.matcher(linha);
+
+                        if (matcher.find()) {
+                             String Marca=matcher.group(1).trim();
+                             double Valor = Double.parseDouble(matcher.group(2));
+                              double Quantidade = Double.parseDouble(matcher.group(3));
+                    System.out.println(Marca+","+Valor * Quantidade);
+
+                           
+                        
+                      
+                        }else{System.out.println("Linha ignorada!");}
+                    
+
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error:"+e.getMessage());
+            
+        } 
+       
+    }
+}
